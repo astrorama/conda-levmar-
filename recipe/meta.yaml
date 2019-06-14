@@ -1,0 +1,27 @@
+package:
+    name: levmar 
+    version: "2.5"
+
+source:
+    url: https://src.fedoraproject.org/repo/pkgs/rpms/levmar/levmar-2.5.tgz/md5/7ca14d79eda6e985f8355b719ae47d35/levmar-2.5.tgz
+    md5: 7ca14d79eda6e985f8355b719ae47d35
+    patches:
+        - levmar_shared.patch
+
+build:
+    number: 1
+
+requirements:
+    build:
+        - make
+        - {{ compiler('c') }}
+    host:
+        - libcblas
+        - liblapack
+    run:
+        - libcblas
+        - liblapack
+
+about:
+    home: http://users.ics.forth.gr/~lourakis/levmar/ 
+
