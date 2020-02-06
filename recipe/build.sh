@@ -14,7 +14,7 @@ mkdir -p "${BUILD_DIR}"
 cd "${BUILD_DIR}"
 
 # Really make sure we use the generated levmar.h
-rm -v "${SRC_DIR}/levmar.h"
+rm "${SRC_DIR}/levmar.h"
 
 cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
@@ -26,7 +26,7 @@ cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
 
 make ${MAKEFLAGS}
 
-mkdir -p "${PREFIX}/include/" "${PREFIX}/lib/"
+mkdir -p "${PREFIX}/include/" "${PREFIX}/lib/" "${PREFIX}/bin/"
 install -m 644 "${SRC_DIR}/levmar.h" "${PREFIX}/include/"
 install -m 644 "liblevmar.${DYN}.2.6" "${PREFIX}/lib/"
 install -m 755 "lmdemo" "${PREFIX}/bin"

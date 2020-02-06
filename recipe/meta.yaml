@@ -13,6 +13,7 @@ build:
 
 requirements:
     build:
+        - cmake >=3.0
         - make
         - {{ compiler('c') }}
     host:
