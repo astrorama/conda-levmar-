@@ -3,10 +3,8 @@ set -xe
 declare -a CMAKE_PLATFORM_FLAGS
 if [[ -n "${OSX_ARCH}" ]]; then
     CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
-    DYN=dylib 
 else
     CMAKE_PLATFORM_FLAGS+=(-DCMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake")
-    DYN=so
 fi
 
 BUILD_DIR="${SRC_DIR}/build"
@@ -28,8 +26,13 @@ make ${MAKEFLAGS}
 
 mkdir -p "${PREFIX}/include/" "${PREFIX}/lib/" "${PREFIX}/bin/"
 install -m 644 "${SRC_DIR}/levmar.h" "${PREFIX}/include/"
-install -m 644 "liblevmar.${DYN}.2.6" "${PREFIX}/lib/"
-install -m 755 "lmdemo" "${PREFIX}/bin"
-ln -s "liblevmar.${DYN}.2.6" "${PREFIX}/lib/liblevmar.${DYN}.2"
-ln -s "liblevmar.${DYN}.2" "${PREFIX}/lib/liblevmar.${DYN}"
 
+if [[ -n "${OSX_ARCH}" ]]; then
+    install -m 644 "liblevmar.dylib" "${PREFIX}/lib"
+else
+    install -m 644 "liblevmar.so.2.6" "${PREFIX}/lib/"
+    ln -s "liblevmar.so.2.6" "${PREFIX}/lib/liblevmar.so.2"
+    ln -s "liblevmar.so.2" "${PREFIX}/lib/liblevmar.so"
+fi
+
+install -m 755 "lmdemo" "${PREFIX}/bin"
