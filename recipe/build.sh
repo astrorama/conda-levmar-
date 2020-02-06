@@ -28,6 +28,7 @@ mkdir -p "${PREFIX}/include/" "${PREFIX}/lib/" "${PREFIX}/bin/"
 install -m 644 "${SRC_DIR}/levmar.h" "${PREFIX}/include/"
 
 if [[ -n "${OSX_ARCH}" ]]; then
+    install -m 644 "liblevmar.2.6.dylib" "${PREFIX}/lib"
     install -m 644 "liblevmar.dylib" "${PREFIX}/lib"
 else
     install -m 644 "liblevmar.so.2.6" "${PREFIX}/lib/"
