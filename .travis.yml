@@ -1,5 +1,8 @@
 language: generic
 
+exclude:
+    - if: tag IS present
+
 matrix:
     include:
         - os: linux
