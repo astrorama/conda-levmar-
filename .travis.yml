@@ -39,7 +39,7 @@ install:
         if [ "$TRAVIS_BRANCH" != "master" ]; then
             conda config --add channels astrorama/label/develop
         fi
-        conda install --yes --quiet conda-build
+        conda install --yes --quiet conda-build conda-verify
         conda install --yes --quiet anaconda-client
 
     # Configure MacOSX SDK
