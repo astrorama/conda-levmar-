@@ -1,0 +1,30 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d138776..d63514f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,8 +1,9 @@
+ # levmar CMake file; see http://www.cmake.org and 
+ #                        http://www.insightsoftwareconsortium.org/wiki/index.php/CMake_Tutorial
+ 
+-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+-PROJECT(LEVMAR)
++CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
++PROJECT(LEVMAR C)
++SET(PROJECT_VERSION 2.6)
+ 
+ SET(HAVE_LAPACK 1 CACHE BOOL "Do we have LAPACK/BLAS?")
+ # the directory where the lapack/blas/f2c libraries reside
+@@ -60,10 +61,12 @@ IF(HAVE_PLASMA)
+ ENDIF(HAVE_PLASMA)
+ 
+ # levmar library source files
+-ADD_LIBRARY(levmar STATIC
++ADD_LIBRARY(levmar SHARED
+   lm.c Axb.c misc.c lmlec.c lmbc.c lmblec.c lmbleic.c
+   levmar.h misc.h compiler.h
+ )
++TARGET_LINK_LIBRARIES(levmar m ${LAPACKBLAS_LIB_NAMES})
++SET_TARGET_PROPERTIES(levmar PROPERTIES VERSION ${PROJECT_VERSION})
+ 
+ # demo program
+ IF(BUILD_DEMO)

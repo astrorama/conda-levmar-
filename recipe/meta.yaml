@@ -1,27 +1,34 @@
 package:
     name: levmar 
-    version: "2.5"
+    version: "2.6"
 
 source:
-    url: https://src.fedoraproject.org/repo/pkgs/rpms/levmar/levmar-2.5.tgz/md5/7ca14d79eda6e985f8355b719ae47d35/levmar-2.5.tgz
-    md5: 7ca14d79eda6e985f8355b719ae47d35
+    url: https://src.fedoraproject.org/repo/pkgs/rpms/levmar/levmar-2.6.tgz/sha512/5b4c64b63be9b29d6ad2df435af86cd2c2e3216313378561a670ac6a392a51bbf1951e96c6b1afb77c570f23dd8e194017808e46929fec2d8d9a7fe6cf37022b/levmar-2.6.tgz
+    sha512: 5b4c64b63be9b29d6ad2df435af86cd2c2e3216313378561a670ac6a392a51bbf1951e96c6b1afb77c570f23dd8e194017808e46929fec2d8d9a7fe6cf37022b
     patches:
-        - levmar_shared.patch
+        - levmar-cmake-shared.patch
 
 build:
-    number: 3
+    number: 1
 
 requirements:
     build:
         - make
         - {{ compiler('c') }}
     host:
-        - libcblas
+        - libopenblas
         - liblapack
     run:
-        - libcblas
+        - libopenblas
         - liblapack
+
+test:
+    commands:
+        - lmdemo
 
 about:
     home: http://users.ics.forth.gr/~lourakis/levmar/ 
+    license: GPL2
+    license_file: LICENSE
+    summary: Levenberg-Marquardt nonlinear least squares algorithm
 
