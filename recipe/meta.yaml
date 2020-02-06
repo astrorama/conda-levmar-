@@ -24,7 +24,7 @@ requirements:
 
 test:
     commands:
-        - lmdemo
+        - $PREFIX/bin/lmdemo
 
 about:
     home: http://users.ics.forth.gr/~lourakis/levmar/ 
