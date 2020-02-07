@@ -22,19 +22,5 @@ cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
     "${SRC_DIR}"
 
 
-make ${MAKEFLAGS}
+make install ${MAKEFLAGS}
 
-mkdir -p "${PREFIX}/include/" "${PREFIX}/lib/" "${PREFIX}/bin/"
-install -m 644 "${SRC_DIR}/levmar.h" "${PREFIX}/include/"
-
-if [[ -n "${OSX_ARCH}" ]]; then
-    install -m 755 "liblevmar.2.6.dylib" "${PREFIX}/lib/"
-    ln -s "liblevmar.2.6.dylib" "${PREFIX}/lib/liblevmar.dylib"
-    install_name_tool -change "$(pwd)/liblevmar.2.6.dylib" "${PREFIX}/lib/liblevmar.2.6.dylib" lmdemo
-else
-    install -m 755 "liblevmar.so.2.6" "${PREFIX}/lib/"
-    ln -s "liblevmar.so.2.6" "${PREFIX}/lib/liblevmar.so.2"
-    ln -s "liblevmar.so.2" "${PREFIX}/lib/liblevmar.so"
-fi
-
-install -m 755 "lmdemo" "${PREFIX}/bin/"

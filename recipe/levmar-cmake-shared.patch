@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d138776..d63514f 100644
+index d138776..848495d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,8 +1,9 @@
@@ -14,17 +14,39 @@ index d138776..d63514f 100644
  
  SET(HAVE_LAPACK 1 CACHE BOOL "Do we have LAPACK/BLAS?")
  # the directory where the lapack/blas/f2c libraries reside
-@@ -60,10 +61,12 @@ IF(HAVE_PLASMA)
+@@ -60,10 +61,21 @@ IF(HAVE_PLASMA)
  ENDIF(HAVE_PLASMA)
  
  # levmar library source files
 -ADD_LIBRARY(levmar STATIC
++LINK_DIRECTORIES(${LAPACKBLAS_DIR})
 +ADD_LIBRARY(levmar SHARED
    lm.c Axb.c misc.c lmlec.c lmbc.c lmblec.c lmbleic.c
    levmar.h misc.h compiler.h
  )
 +TARGET_LINK_LIBRARIES(levmar m ${LAPACKBLAS_LIB_NAMES})
 +SET_TARGET_PROPERTIES(levmar PROPERTIES VERSION ${PROJECT_VERSION})
++SET_TARGET_PROPERTIES(levmar PROPERTIES PUBLIC_HEADER ${CMAKE_CURRENT_SOURCE_DIR}/levmar.h)
++
++INSTALL(TARGETS levmar
++    LIBRARY
++        DESTINATION lib
++    PUBLIC_HEADER
++        DESTINATION include
++)
  
  # demo program
  IF(BUILD_DEMO)
+@@ -92,6 +104,12 @@ IF(BUILD_DEMO)
+ 
+ # make sure that the library is built before the demo
+   ADD_DEPENDENCIES(lmdemo levmar)
++
++  INSTALL(TARGETS lmdemo
++        RUNTIME
++            DESTINATION bin
++   )
+ ENDIF(BUILD_DEMO)
+ 
+ #SUBDIRS(matlab)
++
