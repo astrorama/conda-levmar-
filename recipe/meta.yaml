@@ -21,9 +21,9 @@ requirements:
         - libcblas=3.8.0 *openblas
         - liblapack=3.8.0 *openblas
     run:
-        - {{ pin_compatible('libopenblas', 'x.x.x') }}
-        - {{ pin_compatible('libcblas') }}
-        - {{ pin_compatible('liblapack') }}
+        - libopenblas 0.3.8
+        - libcblas=3.8.0 *openblas
+        - liblapack=3.8.0 *openblas
     run_exports:
         - {{ pin_compatible('levmar', max_pin='x.x', min_pin='x.x') }}
 
