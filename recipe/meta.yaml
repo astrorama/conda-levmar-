@@ -9,7 +9,7 @@ source:
         - levmar-cmake-shared.patch
 
 build:
-    number: 3
+    number: 4
 
 requirements:
     build:
@@ -17,13 +17,11 @@ requirements:
         - make
         - {{ compiler('c') }}
     host:
-        - libopenblas 0.3.8
-        - libcblas=3.8.0 *openblas
-        - liblapack=3.8.0 *openblas
+        - libcblas=3.8.0 *mkl
+        - liblapack=3.8.0 *mkl
     run:
-        - libopenblas 0.3.8
-        - libcblas=3.8.0 *openblas
-        - liblapack=3.8.0 *openblas
+        - libcblas=3.8.0 *mkl
+        - liblapack=3.8.0 *mkl
     run_exports:
         - {{ pin_compatible('levmar', max_pin='x.x', min_pin='x.x') }}
 
