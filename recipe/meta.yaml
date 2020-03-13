@@ -9,7 +9,9 @@ source:
         - levmar-cmake-shared.patch
 
 build:
-    number: 4
+    number: 5
+    run_exports:
+        - {{ pin_subpackage('levmar', max_pin='x.x') }}
 
 requirements:
     build:
@@ -22,8 +24,6 @@ requirements:
     run:
         - libcblas=3.8.0 *mkl
         - liblapack=3.8.0 *mkl
-    run_exports:
-        - {{ pin_compatible('levmar', max_pin='x.x', min_pin='x.x') }}
 
 test:
     commands:
