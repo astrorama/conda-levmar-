@@ -1,61 +1,20 @@
+# This file was generated automatically from conda-smithy. To update this configuration,
+# update the conda-forge.yml and/or the recipe/meta.yaml.
+
 language: generic
 
-exclude:
-    - if: tag IS present
+
 
 matrix:
-    include:
-        - os: linux
-        - os: osx
-          osx_image: xcode7.3
+  include:
+    - env: CONFIG=linux_64_ UPLOAD_PACKAGES=True PLATFORM=linux-64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-comp7
+      os: linux
+      arch: amd64
 
-before_install:
-    # Remove homebrew
-    - |
-        if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-            curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall > ~/uninstall_homebrew
-            chmod +x ~/uninstall_homebrew
-            ~/uninstall_homebrew -fq
-            rm ~/uninstall_homebrew
-        fi
+script:
+  - export CI=travis
+  - export GIT_BRANCH="$TRAVIS_BRANCH"
+  - export FEEDSTOCK_NAME=$(basename ${TRAVIS_REPO_SLUG})
 
-install:
-    # Install miniconda
-    - |
-        MINICONDA_URL="https://repo.continuum.io/miniconda"
-        if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-            MINICONDA_FILE="Miniconda3-latest-MacOSX-x86_64.sh"
-        else
-            MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
-        fi
-        curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
-        bash $MINICONDA_FILE -b
 
-    # Configure conda
-    - |
-        source $HOME/miniconda3/bin/activate root
-        conda config --add channels conda-forge
-        conda config --add channels astrorama
-        if [ "$TRAVIS_BRANCH" != "master" ]; then
-            conda config --add channels astrorama/label/develop
-        fi
-        conda install --yes --quiet conda-build conda-verify
-        conda install --yes --quiet anaconda-client
-
-    # Configure MacOSX SDK
-    - |
-        if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-            echo -e "CONDA_BUILD_SYSROOT:\n    - $(xcrun --sdk macosx --show-sdk-path) # [osx]" > $HOME/conda_build_config.yaml
-            cat $HOME/conda_build_config.yaml
-        fi
-
-script: |
-    if [ "$TRAVIS_BRANCH" = "master" ]; then
-        LABELS="main"
-    elif [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ]; then
-        LABELS="$TRAVIS_BRANCH"
-    else
-        LABELS="pr/$TRAVIS_PULL_REQUEST_BRANCH/$TRAVIS_BRANCH"
-    fi 
-    conda build --user astrorama ./recipe --token "$ANACONDA_TOKEN" --label "$LABELS"
-
+  - if [[ ${PLATFORM} =~ .*linux.* ]]; then ./.scripts/run_docker_build.sh; fi
