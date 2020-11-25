@@ -7,7 +7,7 @@ c_compiler_version:
 channel_sources:
 - astrorama,conda-forge,defaults
 channel_targets:
-- astrorama master
+- astrorama main
 macos_machine:
 - x86_64-apple-darwin13.4.0
 target_platform:

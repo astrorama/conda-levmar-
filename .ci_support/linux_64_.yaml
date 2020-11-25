@@ -7,7 +7,7 @@ cdt_name:
 channel_sources:
 - astrorama,conda-forge,defaults
 channel_targets:
-- astrorama master
+- astrorama main
 docker_image:
 - quay.io/condaforge/linux-anvil-comp7
 target_platform:
