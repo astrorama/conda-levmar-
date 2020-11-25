@@ -13,7 +13,7 @@ source:
         - levmar-cmake-shared.patch
 
 build:
-    number: 5
+    number: {{ build_number }}
     run_exports:
         - {{ pin_subpackage('levmar', max_pin='x.x') }}
 
