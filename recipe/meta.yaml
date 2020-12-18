@@ -23,11 +23,11 @@ requirements:
         - make
         - {{ compiler('c') }}
     host:
-        - libcblas=3.8.0 *mkl
-        - liblapack=3.8.0 *mkl
+        - libcblas=3.8.0 *openblas
+        - liblapack=3.8.0 *openblas
     run:
-        - libcblas=3.8.0 *mkl
-        - liblapack=3.8.0 *mkl
+        - libcblas=3.8.0 *openblas
+        - liblapack=3.8.0 *openblas
 
 test:
     commands:
