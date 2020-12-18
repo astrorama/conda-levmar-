@@ -1,6 +1,6 @@
 {% set name = "levmar" %}
 {% set version = "2.6" %}
-{% set build_number = 6 %}
+{% set build_number = 7 %}
 
 package:
     name: {{ name|lower }}
