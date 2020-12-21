@@ -25,6 +25,9 @@ requirements:
     host:
         - libcblas>=3.8.0
         - liblapack>=3.8.0
+    run:
+        - {{ pin_compatible('libcblas', min_pin='x.x', max_pin='x') }}
+        - {{ pin_compatible('liblapack', min_pin='x.x', max_pin='x') }}
 
 test:
     commands:
