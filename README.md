@@ -69,18 +69,44 @@ Installing `levmar` from the `astrorama` channel can be achieved by adding `astr
 
 ```
 conda config --add channels astrorama
+conda config --set channel_priority strict
 ```
 
-Once the `astrorama` channel has been enabled, `levmar` can be installed with:
+Once the `astrorama` channel has been enabled, `levmar` can be installed with `conda`:
 
 ```
 conda install levmar
 ```
 
-It is possible to list all of the versions of `levmar` available on your platform with:
+or with `mamba`:
+
+```
+mamba install levmar
+```
+
+It is possible to list all of the versions of `levmar` available on your platform with `conda`:
 
 ```
 conda search levmar --channel astrorama
+```
+
+or with `mamba`:
+
+```
+mamba search levmar --channel astrorama
+```
+
+Alternatively, `mamba repoquery` may provide more information:
+
+```
+# Search all versions available on your platform:
+mamba repoquery search levmar --channel astrorama
+
+# List packages depending on `levmar`:
+mamba repoquery whoneeds levmar --channel astrorama
+
+# List dependencies of `levmar`:
+mamba repoquery depends levmar --channel astrorama
 ```
 
 
@@ -103,9 +129,9 @@ build distinct package versions.
 
 In order to produce a uniquely identifiable distribution:
  * If the version of a package **is not** being increased, please add or increase
-   the [``build/number``](https://conda.io/docs/user-guide/tasks/build-packages/define-metadata.html#build-number-and-string).
+   the [``build/number``](https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#build-number-and-string).
  * If the version of a package **is** being increased, please remember to return
-   the [``build/number``](https://conda.io/docs/user-guide/tasks/build-packages/define-metadata.html#build-number-and-string)
+   the [``build/number``](https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#build-number-and-string)
    back to 0.
 
 Feedstock Maintainers
